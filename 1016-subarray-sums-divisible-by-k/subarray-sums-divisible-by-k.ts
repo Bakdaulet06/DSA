@@ -1,15 +1,15 @@
 function subarraysDivByK(nums: number[], k: number): number {
-    const prefixCount = new Map<number, number>()
-    prefixCount.set(0, 1)
+    const prefixSums = new Map<number, number>()
     let res = 0
-    let prefixSum = 0
+    let curSum = 0
+    prefixSums.set(0, 1)
     for(const num of nums){
-        prefixSum+=num
-        let remainder = ((prefixSum%k) + k) % k
-        if(prefixCount.has(remainder)){
-            res+=prefixCount.get(remainder)
+        curSum+=num
+        const remainder = ((curSum%k)+k)%k
+        if(prefixSums.has(remainder)){
+            res+=prefixSums.get(remainder)
         }
-        prefixCount.set(remainder, (prefixCount.get(remainder) || 0) + 1)
+        prefixSums.set(remainder, (prefixSums.get(remainder) || 0)+1)
     }
     return res
 };
